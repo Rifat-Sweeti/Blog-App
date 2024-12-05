@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coranu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Coranu</h1>
+    <button id="authButton">Login</button>
+</header>
+
+<div id="mainContent">
+    <div class="blog-form">
+        <h2>Create a Blog Post</h2>
+        <input type="text" id="blogTitle" placeholder="Blog Title" />
+        <textarea id="blogContent" rows="5" placeholder="Blog Content"></textarea>
+        <select id="blogCategory">
+            <option value="General">General</option>
+            <option value="Technology">Technology</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Education">Education</option>
+        </select>
+        <button id="postBlog">Post Blog</button>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="searchBar" placeholder="Search blogs..." />
+    </div>
+
+    <div id="blogsContainer">
+        <h2>All Blogs</h2>
+    </div>
+</div>
+
+<!-- Firebase Imports -->
+<script type="module" src="app.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
