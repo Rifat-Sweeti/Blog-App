@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -34,7 +34,7 @@ onAuthStateChanged(auth, (user) => {
     loadBlogs();
   } else {
     currentUser = null;
-    authButton.textContent = "Login";
+    authButton.textContent = "Login / Register";
     loadBlogs();
   }
 });
@@ -140,14 +140,36 @@ searchBar.addEventListener("input", async () => {
   });
 });
 
-// Auth Button (Login/Logout)
-authButton.addEventListener("click", () => {
+// Auth Button (Login / Register / Logout)
+authButton.addEventListener("click", async () => {
   if (currentUser) {
     signOut(auth);
+    alert("Logged out successfully!");
   } else {
-    const email = prompt("Enter email:");
-    const password = prompt("Enter password:");
-    signInWithEmailAndPassword(auth, email, password)
-      .catch((error) => alert("Failed to login: " + error.message));
+    const action = prompt("Type 'register' to create a new account or 'login' to log in:").toLowerCase();
+
+    if (action === "register") {
+      const email = prompt("Enter email:");
+      const password = prompt("Enter password:");
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Registration successful! You are now logged in.");
+      } catch (error) {
+        alert("Failed to register: " + error.message);
+      }
+    } else if (action === "login") {
+      const email = prompt("Enter email:");
+      const password = prompt("Enter password:");
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login successful!");
+      } catch (error) {
+        alert("Failed to login: " + error.message);
+      }
+    } else {
+      alert("Invalid action. Please type 'register' or 'login'.");
+    }
   }
 });
